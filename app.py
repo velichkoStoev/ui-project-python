@@ -24,10 +24,10 @@ class Application(tk.Frame):
 		self._createLeftFrame(mainFrame)
 		self._createRightFrame(mainFrame)
 
-		mainFrame.pack(side=tk.TOP, fill=tk.BOTH)
+		mainFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
 	def _createLeftFrame(self, mainFrame):
-		leftFrame = tk.Frame(mainFrame, bd=1, bg="white", width=500, height=500)
+		leftFrame = tk.Frame(mainFrame, bd=1, bg="white", width=500)
 		leftFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
 
 
