@@ -125,7 +125,7 @@ class Application(tk.Frame):
 		settingsMenu = tk.Menu(settingsDropdownButton, tearoff=False)
 		settingsDropdownButton.config(menu=settingsMenu)
 
-		settingsMenu.add_checkbutton(label="Exposure")
+		settingsMenu.add_checkbutton(label="Exposure", command=self._showExposureWindow)
 		settingsMenu.add_checkbutton(label="Color")
 
 		settingsDropdownButton.pack(side=tk.LEFT, fill=tk.Y)
@@ -137,6 +137,63 @@ class Application(tk.Frame):
 
 	def _photoCommentWindow(self):
 		tk.simpledialog.askstring("Comment the picture", "Your comment")
+
+	def _showExposureWindow(self):
+		exposureWindow = tk.Toplevel(self)
+		exposureWindow.resizable(tk.FALSE, tk.FALSE)
+
+		self._addHolderFrame(exposureWindow)
+		self._addSliders(exposureWindow)
+
+	def _addHolderFrame(self, exposureWindow):
+		holderFrame = tk.Frame(exposureWindow)		
+
+		autoButton = tk.Button(holderFrame, text="Auto")
+		autoButton.pack(side=tk.LEFT, padx=5)
+
+		clipLabel = tk.Label(holderFrame, text="Clip %")
+		clipLabel.pack(side=tk.LEFT, padx=5)
+
+		clipSpinbox = tk.Spinbox(holderFrame, from_=0, to=100, width=3)
+		clipSpinbox.pack(side=tk.LEFT, padx=5)
+
+		neutralButton = tk.Button(holderFrame, text="Neutral")
+		neutralButton.pack(side=tk.LEFT, padx=5)
+
+		holderFrame.pack(fill=tk.X)
+
+	def _addSliders(self, exposureWindow):
+		slidersNames = [
+			"Exposure compensation", "Highlight compensation",
+			"Highlight compensation treshold", "Black", "Lightness",
+			"Contrast", "Saturation"
+		]
+
+		slidersCount = len(slidersNames)
+
+		for i in range(slidersCount):
+			self._addSlider(exposureWindow, slidersNames[i])
+
+	def _addSlider(self, exposureWindow, name):
+		frame = tk.Frame(exposureWindow)
+
+		separator = tk.Frame(frame, height=2, bg="black")
+		separator.pack(fill=tk.X, pady=2)
+
+		label = tk.Label(frame, text=name)
+		label.pack(side=tk.TOP)
+
+		slider = tk.Scale(frame, orient=tk.HORIZONTAL)
+		slider.pack(side=tk.LEFT)
+
+		undoButton = tk.Button(frame, text="Undo", command= lambda: self._setSliderDefaultValue(slider))
+		undoButton.pack(side=tk.RIGHT)
+
+		frame.pack(fill=tk.X, padx=5)
+
+	def _setSliderDefaultValue(self, slider):
+		slider.set(0)
+
 
 root = tk.Tk()
 app = Application(master = root)
