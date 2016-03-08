@@ -11,7 +11,6 @@ class Application(tk.Frame):
 		
 		self.toolbarIcons = {}
 
-		self.master.minsize(width=self.MAIN_WINDOW_WIDTH, height=self.MAIN_WINDOW_HEIGHT)
 		self.pack(fill=tk.BOTH, expand=1)
 		self._createMainMenu()
 		self._createToolbar()
@@ -20,28 +19,31 @@ class Application(tk.Frame):
 	# private methods
 
 	def _createMainFrame(self):
-		mainFrame = tk.Frame(self, bg="red")
-
-		frame1 = tk.Frame(mainFrame, bg="yellow")
-		frame1.pack(side=tk.LEFT)
+		mainFrame = tk.Frame(self)
 
 		self._createLeftFrame(mainFrame)
+		self._createRightFrame(mainFrame)
 
 		mainFrame.pack(side=tk.TOP, fill=tk.BOTH)
 
 	def _createLeftFrame(self, mainFrame):
+		leftFrame = tk.Frame(mainFrame, bd=1, bg="white", width=500, height=500)
+		leftFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+
+
+	def _createRightFrame(self, mainFrame):
 		button_icon_names = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
 		button_texts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
 		buttons_size = len(button_icon_names)
 
-		leftFrame = tk.Frame(mainFrame, bd=1, bg="black")
+		rightFrame = tk.Frame(mainFrame, bd=1, bg="black")
 
 		for i in range(buttons_size):
 			self.toolbarIcons[button_icon_names[i]] = tk.PhotoImage(file="icons/{}.png".format(button_icon_names[i]))
-			rotateRightButton = tk.Button(leftFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], relief=tk.FLAT, compound=tk.LEFT)
+			rotateRightButton = tk.Button(rightFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], relief=tk.FLAT, compound=tk.LEFT)
 			rotateRightButton.pack(fill=tk.X, pady=1)
 
-		leftFrame.pack(side=tk.RIGHT)
+		rightFrame.pack(side=tk.RIGHT)
 
 	def _createMainMenu(self):
 		# mainMenu class
