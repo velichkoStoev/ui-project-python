@@ -7,6 +7,7 @@ class Application(tk.Frame):
 		tk.Frame.__init__(self, master)
 		
 		self._toolbarIcons = {}
+		self._rightFrameOptionsIcons = {}
 
 		self.pack(fill=tk.BOTH, expand=True)
 		self._createMainMenu()
@@ -51,8 +52,8 @@ class Application(tk.Frame):
 		rightFrame = tk.Frame(mainFrame, bd=1, height=500)
 
 		for i in range(buttonCount):
-			self._toolbarIcons[buttonIconNames[i]] = tk.PhotoImage(file="icons/{}.png".format(buttonIconNames[i]))
-			rotateRightButton = tk.Button(rightFrame, text=buttonTexts[i], image=self._toolbarIcons[buttonIconNames[i]], compound=tk.LEFT)
+			self._rightFrameOptionsIcons[buttonIconNames[i]] = tk.PhotoImage(file="icons/{}.png".format(buttonIconNames[i]))
+			rotateRightButton = tk.Button(rightFrame, text=buttonTexts[i], image=self._rightFrameOptionsIcons[buttonIconNames[i]], compound=tk.LEFT)
 			rotateRightButton.pack(fill=tk.X, pady=1)
 
 		rightFrame.pack(side=tk.RIGHT, fill=tk.Y)
@@ -99,6 +100,9 @@ class Application(tk.Frame):
 	def _createToolbar(self):
 		# toolbar class
 
+		toolbarIconTags = ["full_size", "plus", "minus", "delete"]
+		toolbarIconTagsCount = len(toolbarIconTags)
+
 		toolbar = tk.Frame(self, bd=1)
 
 		previewButton = tk.Button(toolbar, text="Preview")
@@ -107,21 +111,10 @@ class Application(tk.Frame):
 		nextButton = tk.Button(toolbar, text="Next")
 		nextButton.pack(side=tk.LEFT, fill=tk.Y)
 
-		self._toolbarIcons["full_size"] = tk.PhotoImage(file="icons/fullsize.png")
-		fullSizeButton = tk.Button(toolbar, image=self._toolbarIcons["full_size"])
-		fullSizeButton.pack(side=tk.LEFT)
-
-		self._toolbarIcons["plus"] = tk.PhotoImage(file="icons/plus.png")
-		plusButton = tk.Button(toolbar, image=self._toolbarIcons["plus"])
-		plusButton.pack(side=tk.LEFT)
-
-		self._toolbarIcons["minus"] = tk.PhotoImage(file="icons/minus.png")
-		minusButton = tk.Button(toolbar, image=self._toolbarIcons["minus"])
-		minusButton.pack(side=tk.LEFT)
-
-		self._toolbarIcons["delete"] = tk.PhotoImage(file="icons/delete.png")
-		deleteButton = tk.Button(toolbar, image=self._toolbarIcons["delete"])
-		deleteButton.pack(side=tk.LEFT)
+		for i in range(toolbarIconTagsCount):
+			self._toolbarIcons[toolbarIconTags[i]] = tk.PhotoImage(file="icons/{}.png".format(toolbarIconTags[i]))
+			toolbarIconButton = tk.Button(toolbar, image=self._toolbarIcons[toolbarIconTags[i]])
+			toolbarIconButton.pack(side=tk.LEFT)
 
 		commentButton = tk.Button(toolbar, text="Comment", command=self._photoCommentWindow)
 		commentButton.pack(side=tk.LEFT, fill=tk.Y)
