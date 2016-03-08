@@ -63,27 +63,34 @@ class Application(tk.Frame):
 		mainMenu = tk.Menu(self)
 		self.master.config(menu=mainMenu)
 
+		self._addFileMenu(mainMenu)
+		self._addEditMenu(mainMenu)
+		self._addHelpMenu(mainMenu)
+
+	def _addFileMenu(self, mainMenu):
+		fileMenuOptions = ["New", "Open", "Save", "Save as", "Print"]
+		fileMenuOptionsCount = len(fileMenuOptions)
+
 		fileMenu = tk.Menu(mainMenu, tearoff=False)
 		mainMenu.add_cascade(label="File", menu=fileMenu)
 
-		fileMenu.add_command(label="New")
-		fileMenu.add_command(label="Open")
-		fileMenu.add_command(label="Save")
-		fileMenu.add_command(label="Save as")
-		fileMenu.add_command(label="Print")
+		for i in range(fileMenuOptionsCount):
+			fileMenu.add_command(label=fileMenuOptions[i])
+
 		fileMenu.add_separator()
 		fileMenu.add_command(label="Exit", command=self.quit)
+
+	def _addEditMenu(self, mainMenu):
+		editMenuOptions = ["Cut", "Copy", "Paste", "Rename", "Preferences"]
+		editMenuOptionsCount = len(editMenuOptions)
 
 		editMenu = tk.Menu(mainMenu, tearoff=False)
 		mainMenu.add_cascade(label="Edit", menu=editMenu)
 
-		editMenu.add_command(label="Cut")
-		editMenu.add_command(label="Copy")
-		editMenu.add_command(label="Paste")
-		editMenu.add_command(label="Rename")
-		editMenu.add_separator()
-		editMenu.add_command(label="Preferences")
+		for i in range(editMenuOptionsCount):
+			editMenu.add_command(label=editMenuOptions[i])
 
+	def _addHelpMenu(self, mainMenu):
 		helpMenu = tk.Menu(mainMenu, tearoff=False)
 		mainMenu.add_cascade(label="Help", menu=helpMenu)
 
