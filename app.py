@@ -36,14 +36,14 @@ class Application(tk.Frame):
 		button_texts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
 		buttons_size = len(button_icon_names)
 
-		rightFrame = tk.Frame(mainFrame, bd=1, bg="black")
+		rightFrame = tk.Frame(mainFrame, bd=1, height=500)
 
 		for i in range(buttons_size):
 			self.toolbarIcons[button_icon_names[i]] = tk.PhotoImage(file="icons/{}.png".format(button_icon_names[i]))
-			rotateRightButton = tk.Button(rightFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], relief=tk.FLAT, compound=tk.LEFT)
+			rotateRightButton = tk.Button(rightFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], compound=tk.LEFT)
 			rotateRightButton.pack(fill=tk.X, pady=1)
 
-		rightFrame.pack(side=tk.RIGHT)
+		rightFrame.pack(side=tk.RIGHT, fill=tk.Y)
 
 	def _createMainMenu(self):
 		# mainMenu class
