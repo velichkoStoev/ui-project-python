@@ -12,13 +12,40 @@ class Application(tk.Frame):
 		self.toolbarIcons = {}
 
 		self.master.minsize(width=self.MAIN_WINDOW_WIDTH, height=self.MAIN_WINDOW_HEIGHT)
-		self.pack()
+		self.pack(fill=tk.BOTH, expand=1)
 		self._createMainMenu()
 		self._createToolbar()
+		self._createMainFrame()
 
 	# private methods
 
+	def _createMainFrame(self):
+		mainFrame = tk.Frame(self, bg="red")
+
+		frame1 = tk.Frame(mainFrame, bg="yellow")
+		frame1.pack(side=tk.LEFT)
+
+		self._createLeftFrame(mainFrame)
+
+		mainFrame.pack(side=tk.TOP, fill=tk.BOTH)
+
+	def _createLeftFrame(self, mainFrame):
+		button_icon_names = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
+		button_texts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
+		buttons_size = len(button_icon_names)
+
+		leftFrame = tk.Frame(mainFrame, bd=1, bg="black")
+
+		for i in range(buttons_size):
+			self.toolbarIcons[button_icon_names[i]] = tk.PhotoImage(file="icons/{}.png".format(button_icon_names[i]))
+			rotateRightButton = tk.Button(leftFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], relief=tk.FLAT, compound=tk.LEFT)
+			rotateRightButton.pack(fill=tk.X, pady=1)
+
+		leftFrame.pack(side=tk.RIGHT)
+
 	def _createMainMenu(self):
+		# mainMenu class
+
 		mainMenu = tk.Menu(self)
 		self.master.config(menu=mainMenu)
 
@@ -49,7 +76,9 @@ class Application(tk.Frame):
 		helpMenu.add_command(label="About", command=self._showAboutWindow)
 
 	def _createToolbar(self):
-		toolbar = tk.Frame(self, relief=tk.SUNKEN)
+		# toolbar class
+
+		toolbar = tk.Frame(self, bd=1)
 
 		previewButton = tk.Button(toolbar, text="Preview")
 		previewButton.pack(side=tk.LEFT, fill=tk.Y)
@@ -94,7 +123,6 @@ class Application(tk.Frame):
 
 	def _photoCommentWindow(self):
 		tk.simpledialog.askstring("Comment the picture", "Your comment")
-
 
 root = tk.Tk()
 app = Application(master = root)
