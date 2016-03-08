@@ -3,20 +3,32 @@ from tkinter import messagebox
 from tkinter import simpledialog
 
 class Application(tk.Frame):
-	MAIN_WINDOW_WIDTH = 1000
-	MAIN_WINDOW_HEIGHT = 600
-
 	def __init__(self, master=None):
 		tk.Frame.__init__(self, master)
 		
-		self.toolbarIcons = {}
+		self._toolbarIcons = {}
 
-		self.pack(fill=tk.BOTH, expand=1)
+		self.pack(fill=tk.BOTH, expand=True)
 		self._createMainMenu()
 		self._createToolbar()
 		self._createMainFrame()
+		self._createGalleryFrame()
 
 	# private methods
+
+	def _createGalleryFrame(self):
+		galleryFrame = tk.Frame(self, height=150)
+
+		galleryLabel = tk.Label(galleryFrame, text="Gallery")
+		galleryLabel.pack(side=tk.TOP, fill=tk.X)
+
+		self._galleryImageIcon = tk.PhotoImage(file="icons/gallery_image.png")
+
+		for i in range(8):
+			galleryImageLabel = tk.Label(galleryFrame, image=self._galleryImageIcon)
+			galleryImageLabel.pack(side=tk.LEFT, pady=2)
+
+		galleryFrame.pack(side=tk.BOTTOM, fill=tk.X)
 
 	def _createMainFrame(self):
 		mainFrame = tk.Frame(self)
@@ -24,23 +36,23 @@ class Application(tk.Frame):
 		self._createLeftFrame(mainFrame)
 		self._createRightFrame(mainFrame)
 
-		mainFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+		mainFrame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 	def _createLeftFrame(self, mainFrame):
 		leftFrame = tk.Frame(mainFrame, bd=1, bg="white", width=500)
-		leftFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+		leftFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
 
 	def _createRightFrame(self, mainFrame):
-		button_icon_names = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
-		button_texts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
-		buttons_size = len(button_icon_names)
+		buttonIconNames = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
+		buttonTexts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
+		buttonCount = len(buttonIconNames)
 
 		rightFrame = tk.Frame(mainFrame, bd=1, height=500)
 
-		for i in range(buttons_size):
-			self.toolbarIcons[button_icon_names[i]] = tk.PhotoImage(file="icons/{}.png".format(button_icon_names[i]))
-			rotateRightButton = tk.Button(rightFrame, text=button_texts[i], image=self.toolbarIcons[button_icon_names[i]], compound=tk.LEFT)
+		for i in range(buttonCount):
+			self._toolbarIcons[buttonIconNames[i]] = tk.PhotoImage(file="icons/{}.png".format(buttonIconNames[i]))
+			rotateRightButton = tk.Button(rightFrame, text=buttonTexts[i], image=self._toolbarIcons[buttonIconNames[i]], compound=tk.LEFT)
 			rotateRightButton.pack(fill=tk.X, pady=1)
 
 		rightFrame.pack(side=tk.RIGHT, fill=tk.Y)
@@ -88,27 +100,27 @@ class Application(tk.Frame):
 		nextButton = tk.Button(toolbar, text="Next")
 		nextButton.pack(side=tk.LEFT, fill=tk.Y)
 
-		self.toolbarIcons["full_size"] = tk.PhotoImage(file="icons/fullsize.png")
-		fullSizeButton = tk.Button(toolbar, image=self.toolbarIcons["full_size"])
+		self._toolbarIcons["full_size"] = tk.PhotoImage(file="icons/fullsize.png")
+		fullSizeButton = tk.Button(toolbar, image=self._toolbarIcons["full_size"])
 		fullSizeButton.pack(side=tk.LEFT)
 
-		self.toolbarIcons["plus"] = tk.PhotoImage(file="icons/plus.png")
-		plusButton = tk.Button(toolbar, image=self.toolbarIcons["plus"])
+		self._toolbarIcons["plus"] = tk.PhotoImage(file="icons/plus.png")
+		plusButton = tk.Button(toolbar, image=self._toolbarIcons["plus"])
 		plusButton.pack(side=tk.LEFT)
 
-		self.toolbarIcons["minus"] = tk.PhotoImage(file="icons/minus.png")
-		minusButton = tk.Button(toolbar, image=self.toolbarIcons["minus"])
+		self._toolbarIcons["minus"] = tk.PhotoImage(file="icons/minus.png")
+		minusButton = tk.Button(toolbar, image=self._toolbarIcons["minus"])
 		minusButton.pack(side=tk.LEFT)
 
-		self.toolbarIcons["delete"] = tk.PhotoImage(file="icons/delete.png")
-		deleteButton = tk.Button(toolbar, image=self.toolbarIcons["delete"])
+		self._toolbarIcons["delete"] = tk.PhotoImage(file="icons/delete.png")
+		deleteButton = tk.Button(toolbar, image=self._toolbarIcons["delete"])
 		deleteButton.pack(side=tk.LEFT)
 
 		commentButton = tk.Button(toolbar, text="Comment", command=self._photoCommentWindow)
 		commentButton.pack(side=tk.LEFT, fill=tk.Y)
 
-		self.toolbarIcons["arrow_down"] = tk.PhotoImage(file="icons/arrow_down.png")
-		settingsDropdownButton = tk.Menubutton(toolbar, text="Settings", image=self.toolbarIcons["arrow_down"], compound=tk.RIGHT)
+		self._toolbarIcons["arrow_down"] = tk.PhotoImage(file="icons/arrow_down.png")
+		settingsDropdownButton = tk.Menubutton(toolbar, text="Settings", image=self._toolbarIcons["arrow_down"], compound=tk.RIGHT)
 
 		settingsMenu = tk.Menu(settingsDropdownButton, tearoff=False)
 		settingsDropdownButton.config(menu=settingsMenu)
