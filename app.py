@@ -125,8 +125,11 @@ class Application(tk.Frame):
 		settingsMenu = tk.Menu(settingsDropdownButton, tearoff=False)
 		settingsDropdownButton.config(menu=settingsMenu)
 
-		settingsMenu.add_checkbutton(label="Exposure", command=self._showExposureWindow)
-		settingsMenu.add_checkbutton(label="Color")
+		self._exposureVar = tk.IntVar()
+		settingsMenu.add_checkbutton(label="Exposure", command=self._showExposureWindow, variable=self._exposureVar)
+		
+		self._colorVar = tk.IntVar()
+		settingsMenu.add_checkbutton(label="Color", command=self._showColorWindow, variable=self._colorVar)
 
 		settingsDropdownButton.pack(side=tk.LEFT, fill=tk.Y)
 
@@ -139,15 +142,18 @@ class Application(tk.Frame):
 		tk.simpledialog.askstring("Comment the picture", "Your comment")
 
 	def _showExposureWindow(self):
-		exposureWindow = tk.Toplevel(self)
-		exposureWindow.resizable(tk.FALSE, tk.FALSE)
+		if self._exposureVar.get() == 1:
+			self._exposureWindow = tk.Toplevel(self)
+			self._exposureWindow.resizable(tk.FALSE, tk.FALSE)
 
-		self._addHolderFrame(exposureWindow)
-		self._addSliders(exposureWindow)
-		self._addToneCurveFrame(exposureWindow)
+			self._addHolderFrame()
+			self._addSliders()
+			self._addToneCurveFrame()
+		else:
+			self._exposureWindow.destroy()
 
-	def _addHolderFrame(self, exposureWindow):
-		holderFrame = tk.Frame(exposureWindow)		
+	def _addHolderFrame(self):
+		holderFrame = tk.Frame(self._exposureWindow)		
 
 		autoButton = tk.Button(holderFrame, text="Auto")
 		autoButton.pack(side=tk.LEFT, padx=5)
@@ -163,7 +169,7 @@ class Application(tk.Frame):
 
 		holderFrame.pack(fill=tk.X)
 
-	def _addSliders(self, exposureWindow):
+	def _addSliders(self):
 		slidersNames = [
 			"Exposure compensation", "Highlight compensation",
 			"Highlight compensation treshold", "Black", "Lightness",
@@ -173,10 +179,10 @@ class Application(tk.Frame):
 		slidersCount = len(slidersNames)
 
 		for i in range(slidersCount):
-			self._addSlider(exposureWindow, slidersNames[i])
+			self._addSlider(self._exposureWindow, slidersNames[i])
 
-	def _addSlider(self, exposureWindow, name):
-		frame = tk.Frame(exposureWindow)
+	def _addSlider(self, window, name, value = 0):
+		frame = tk.Frame(window)
 
 		separator = tk.Frame(frame, height=2, bg="black")
 		separator.pack(fill=tk.X, pady=2)
@@ -185,6 +191,7 @@ class Application(tk.Frame):
 		label.pack(side=tk.TOP)
 
 		slider = tk.Scale(frame, orient=tk.HORIZONTAL)
+		slider.set(value)
 		slider.pack(side=tk.LEFT)
 
 		undoButton = tk.Button(frame, text="Undo", command= lambda: self._setSliderDefaultValue(slider))
@@ -195,8 +202,8 @@ class Application(tk.Frame):
 	def _setSliderDefaultValue(self, slider):
 		slider.set(0)
 
-	def _addToneCurveFrame(self, exposureWindow):
-		frame = tk.Frame(exposureWindow)
+	def _addToneCurveFrame(self):
+		frame = tk.Frame(self._exposureWindow)
 
 		toneCurveLabel = tk.Label(frame, text="Text Curve")
 		toneCurveLabel.pack(side=tk.LEFT)
@@ -221,6 +228,68 @@ class Application(tk.Frame):
 	def _setToneCurveDefaultValues(self, stringVar1, stringVar2):
 		stringVar1.set("Linear")
 		stringVar2.set("Standart")
+
+	def _showColorWindow(self):
+		if self._colorVar.get() == 1:
+			self._colorWindow = tk.Toplevel(self)
+			self._colorWindow.resizable(tk.FALSE, tk.FALSE)
+
+			self._addWhiteBalanceFrame()
+			self._addBlackWhiteFrame()
+		else:
+			self._colorWindow.destroy()
+
+	def _addWhiteBalanceFrame(self):
+		frame = tk.LabelFrame(self._colorWindow, text="White Balance")
+
+		methodLabel = tk.Label(frame, text="Method")
+		methodLabel.pack()
+
+		methodDropdownOptions = [
+			"Camera","Auto","Daylight", "Cloudy",
+			"Shade", "Underwater", "Fluorescent",
+			"Lamp", "LED", "Flash", "Custom"
+		]
+		stringVar = tk.StringVar()
+		stringVar.set(methodDropdownOptions[0])
+		dropdownMenu = tk.OptionMenu(frame,stringVar,*methodDropdownOptions)
+		dropdownMenu.pack()
+
+		self._addSlider(frame, "Temperature", 60)
+		self._addSlider(frame, "Tint", 30)
+		self._addSlider(frame, "Blue/Red Equilizer", 40)
+
+		frame.pack(padx=5)
+
+	def _addBlackWhiteFrame(self):
+		self.blackWhiteFrame = tk.LabelFrame(self._colorWindow, text="Black and White")
+
+		methodLabel = tk.Label(self.blackWhiteFrame, text="Method")
+		methodLabel.pack()
+
+		methodDropdownOptions = [
+			"Desaturation","Luminance Equilizer", "Channel Mixer"
+		]
+		stringVar = tk.StringVar()
+		stringVar.set(methodDropdownOptions[0])
+		dropdownMenu = tk.OptionMenu(self.blackWhiteFrame,stringVar,*methodDropdownOptions)
+		dropdownMenu.pack()
+
+		self._addGammaCorrection(self.blackWhiteFrame)
+
+		self.blackWhiteFrame.pack(padx=5)
+
+	def _addGammaCorrection(self, blackWhiteFrame):
+		frame = tk.Frame(blackWhiteFrame)
+
+		blackWhiteLabel = tk.Label(frame, text="Gamma Correction")
+		blackWhiteLabel.pack(side=tk.TOP)
+
+		self._addSlider(frame, "Red")
+		self._addSlider(frame, "Green")
+		self._addSlider(frame, "Blue")
+
+		frame.pack()
 
 root = tk.Tk()
 app = Application(master = root)
