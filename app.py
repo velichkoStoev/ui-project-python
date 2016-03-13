@@ -144,6 +144,7 @@ class Application(tk.Frame):
 
 		self._addHolderFrame(exposureWindow)
 		self._addSliders(exposureWindow)
+		self._addToneCurveFrame(exposureWindow)
 
 	def _addHolderFrame(self, exposureWindow):
 		holderFrame = tk.Frame(exposureWindow)		
@@ -158,7 +159,7 @@ class Application(tk.Frame):
 		clipSpinbox.pack(side=tk.LEFT, padx=5)
 
 		neutralButton = tk.Button(holderFrame, text="Neutral")
-		neutralButton.pack(side=tk.LEFT, padx=5)
+		neutralButton.pack(side=tk.RIGHT, padx=5)
 
 		holderFrame.pack(fill=tk.X)
 
@@ -194,6 +195,32 @@ class Application(tk.Frame):
 	def _setSliderDefaultValue(self, slider):
 		slider.set(0)
 
+	def _addToneCurveFrame(self, exposureWindow):
+		frame = tk.Frame(exposureWindow)
+
+		toneCurveLabel = tk.Label(frame, text="Text Curve")
+		toneCurveLabel.pack(side=tk.LEFT)
+
+		dropdownOptions1 = ["Linear","Custom","Parametric", "Control Cage"]
+		stringVar1 = tk.StringVar()
+		stringVar1.set(dropdownOptions1[0])
+		dropdownMenu1 = tk.OptionMenu(frame,stringVar1,*dropdownOptions1)
+		dropdownMenu1.pack(side=tk.LEFT)
+
+		dropdownOptions2 = ["Standart","Weighted Standart","Film-like", "Saturation and Value Blending"]
+		stringVar2 = tk.StringVar()
+		stringVar2.set(dropdownOptions2[0])
+		dropdownMenu2 = tk.OptionMenu(frame,stringVar2,*dropdownOptions2)
+		dropdownMenu2.pack(side=tk.LEFT)
+
+		undoButton = tk.Button(frame, text="Undo", command= lambda: self._setToneCurveDefaultValues(stringVar1, stringVar2))
+		undoButton.pack(side=tk.RIGHT)
+
+		frame.pack()
+
+	def _setToneCurveDefaultValues(self, stringVar1, stringVar2):
+		stringVar1.set("Linear")
+		stringVar2.set("Standart")
 
 root = tk.Tk()
 app = Application(master = root)
