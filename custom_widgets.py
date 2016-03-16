@@ -115,3 +115,25 @@ class GalleryFrame(tk.Frame):
 			galleryImageLabel.pack(side=tk.LEFT, pady=2)
 
 		self.pack(side=tk.BOTTOM, fill=tk.X)
+
+class Slider(tk.Frame):
+	def __init__(self, frame, name):
+		super().__init__(frame)
+
+		separator = tk.Frame(self, height=2, bg="black")
+		separator.pack(fill=tk.X, pady=2)
+
+		label = tk.Label(self, text=name)
+		label.pack(side=tk.TOP)
+
+		self.slider = tk.Scale(self, orient=tk.HORIZONTAL)
+		self.slider.set(value)
+		self.slider.pack(side=tk.LEFT)
+
+		undoButton = tk.Button(self, text="Undo", command=self._setSliderDefaultValue
+		undoButton.pack(side=tk.RIGHT)
+
+		self.pack(fill=tk.X, padx=5)
+
+	def _setSliderDefaultValue(self):
+		self.slider.set(0)
