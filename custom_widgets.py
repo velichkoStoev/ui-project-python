@@ -36,3 +36,68 @@ class MainMenu(tk.Menu):
 
 	def _showAboutWindow(self):
 		tk.messagebox.showinfo("About", "Velichko Stoev made this using TkInter!")
+
+class Toolbar(tk.Frame):
+	ICON_NAMES = ["full_size", "plus", "minus", "delete"]
+	ICONS_COUNT = len(ICON_NAMES)
+
+	def __init__(self, frame = None):
+		super().__init__(frame, bd=1)
+		self._toolbarIcons = {}
+		self.pack(side=tk.TOP, fill=tk.X)
+
+	def addButton(self, text):
+		button = tk.Button(self, text=text)
+		button.pack(side=tk.LEFT, fill=tk.Y)
+
+	def addIconButtons(self):
+		for i in range(self.ICONS_COUNT):
+			self._toolbarIcons[self.ICON_NAMES[i]] = tk.PhotoImage(file="icons/{}.png".format(self.ICON_NAMES[i]))
+			toolbarIconButton = tk.Button(self, image=self._toolbarIcons[self.ICON_NAMES[i]])
+			toolbarIconButton.pack(side=tk.LEFT)
+
+	def addSettingsMenubutton(self):
+		self._toolbarIcons["arrow_down"] = tk.PhotoImage(file="icons/arrow_down.png")
+		settingsDropdownButton = tk.Menubutton(self, text="Settings", image=self._toolbarIcons["arrow_down"], compound=tk.RIGHT)
+
+		settingsMenu = tk.Menu(settingsDropdownButton, tearoff=False)
+		settingsDropdownButton.config(menu=settingsMenu)
+
+		self._exposureVar = tk.IntVar()
+		settingsMenu.add_checkbutton(label="Exposure", command=self._showExposureWindow, variable=self._exposureVar)
+		
+		self._colorVar = tk.IntVar()
+		settingsMenu.add_checkbutton(label="Color", command=self._showColorWindow, variable=self._colorVar)
+
+		settingsDropdownButton.pack(side=tk.LEFT, fill=tk.Y)
+
+	def _showColorWindow(self):
+		print("Open colors")
+
+	def _showExposureWindow(self):
+		print("Open exposure")
+
+
+class MainFrame(tk.Frame):
+	def __init__(self, frame = None):
+		super().__init__(frame)
+		self._optionsIcons = {}
+		self.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+	def addImageHolderFrame(self):
+		imageHolderFrame = tk.Frame(self, bd=1, bg="white", width=500)
+		imageHolderFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+	def addOptionsFrame(self):
+		buttonIconNames = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
+		buttonTexts = ["Save as", "Rotate Left", "Rotate Right", "Mirror", "Flip", "Resize", "Crop", "Show information"]
+		buttonCount = len(buttonIconNames)
+
+		editOptionsFrame = tk.Frame(self, bd=1, height=500)
+
+		for i in range(buttonCount):
+			self._optionsIcons[buttonIconNames[i]] = tk.PhotoImage(file="icons/{}.png".format(buttonIconNames[i]))
+			rotateRightButton = tk.Button(editOptionsFrame, text=buttonTexts[i], image=self._optionsIcons[buttonIconNames[i]], compound=tk.LEFT)
+			rotateRightButton.pack(fill=tk.X, pady=1)
+
+		editOptionsFrame.pack(side=tk.RIGHT, fill=tk.Y)
