@@ -8,7 +8,7 @@ class Application(tk.Frame):
 	def __init__(self, master=None):
 		tk.Frame.__init__(self, master)
 		self.pack(fill=tk.BOTH, expand=True)
-		
+
 		self._createMainMenu()
 		self._createToolbar()
 		self._createMainFrame()
@@ -17,18 +17,7 @@ class Application(tk.Frame):
 	# private methods
 
 	def _createGalleryFrame(self):
-		galleryFrame = tk.Frame(self, height=150)
-
-		galleryLabel = tk.Label(galleryFrame, text="Gallery")
-		galleryLabel.pack(side=tk.TOP, fill=tk.X)
-
-		self._galleryImageIcon = tk.PhotoImage(file="icons/gallery_image.png")
-
-		for i in range(8):
-			galleryImageLabel = tk.Label(galleryFrame, image=self._galleryImageIcon)
-			galleryImageLabel.pack(side=tk.LEFT, pady=2)
-
-		galleryFrame.pack(side=tk.BOTTOM, fill=tk.X)
+		cw.GalleryFrame(self)
 
 	def _createMainFrame(self):
 		mainFrame = cw.MainFrame(self)

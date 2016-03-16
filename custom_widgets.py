@@ -77,7 +77,6 @@ class Toolbar(tk.Frame):
 	def _showExposureWindow(self):
 		print("Open exposure")
 
-
 class MainFrame(tk.Frame):
 	def __init__(self, frame = None):
 		super().__init__(frame)
@@ -101,3 +100,18 @@ class MainFrame(tk.Frame):
 			rotateRightButton.pack(fill=tk.X, pady=1)
 
 		editOptionsFrame.pack(side=tk.RIGHT, fill=tk.Y)
+
+class GalleryFrame(tk.Frame):
+	def __init__(self, frame = None):
+		super().__init__(frame, height=150)
+		
+		galleryLabel = tk.Label(self, text="Gallery")
+		galleryLabel.pack(side=tk.TOP, fill=tk.X)
+
+		self._galleryImageIcon = tk.PhotoImage(file="icons/gallery_image.png")
+
+		for i in range(8):
+			galleryImageLabel = tk.Label(self, image=self._galleryImageIcon)
+			galleryImageLabel.pack(side=tk.LEFT, pady=2)
+
+		self.pack(side=tk.BOTTOM, fill=tk.X)
