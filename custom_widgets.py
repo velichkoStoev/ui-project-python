@@ -1,4 +1,5 @@
 import tkinter as tk
+import windows as w
 
 class MainMenu(tk.Menu):
 	def __init__(self, frame = None):
@@ -75,7 +76,14 @@ class Toolbar(tk.Frame):
 		print("Open colors")
 
 	def _showExposureWindow(self):
-		print("Open exposure")
+		if self._exposureVar.get() == 1:
+			self._exposureWindow = w.ExposureWindow(self)
+
+			self._exposureWindow.addHolderFrame()
+			self._exposureWindow.addSliders()
+			self._exposureWindow.addToneCurveFrame()
+		else:
+			self._exposureWindow.destroy()
 
 class MainFrame(tk.Frame):
 	def __init__(self, frame = None):
@@ -117,7 +125,7 @@ class GalleryFrame(tk.Frame):
 		self.pack(side=tk.BOTTOM, fill=tk.X)
 
 class Slider(tk.Frame):
-	def __init__(self, frame, name):
+	def __init__(self, frame, name, value=0):
 		super().__init__(frame)
 
 		separator = tk.Frame(self, height=2, bg="black")
@@ -130,7 +138,7 @@ class Slider(tk.Frame):
 		self.slider.set(value)
 		self.slider.pack(side=tk.LEFT)
 
-		undoButton = tk.Button(self, text="Undo", command=self._setSliderDefaultValue
+		undoButton = tk.Button(self, text="Undo", command=self._setSliderDefaultValue)
 		undoButton.pack(side=tk.RIGHT)
 
 		self.pack(fill=tk.X, padx=5)
