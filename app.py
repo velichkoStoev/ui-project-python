@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import simpledialog
 
+import custom_widgets as cw
+
 class Application(tk.Frame):
 	def __init__(self, master=None):
 		tk.Frame.__init__(self, master)
@@ -59,43 +61,10 @@ class Application(tk.Frame):
 		rightFrame.pack(side=tk.RIGHT, fill=tk.Y)
 
 	def _createMainMenu(self):
-		# mainMenu class
-
-		mainMenu = tk.Menu(self)
-		self.master.config(menu=mainMenu)
-
-		self._addFileMenu(mainMenu)
-		self._addEditMenu(mainMenu)
-		self._addHelpMenu(mainMenu)
-
-	def _addFileMenu(self, mainMenu):
-		fileMenuOptions = ["New", "Open", "Save", "Save as", "Print"]
-		fileMenuOptionsCount = len(fileMenuOptions)
-
-		fileMenu = tk.Menu(mainMenu, tearoff=False)
-		mainMenu.add_cascade(label="File", menu=fileMenu)
-
-		for i in range(fileMenuOptionsCount):
-			fileMenu.add_command(label=fileMenuOptions[i])
-
-		fileMenu.add_separator()
-		fileMenu.add_command(label="Exit", command=self.quit)
-
-	def _addEditMenu(self, mainMenu):
-		editMenuOptions = ["Cut", "Copy", "Paste", "Rename", "Preferences"]
-		editMenuOptionsCount = len(editMenuOptions)
-
-		editMenu = tk.Menu(mainMenu, tearoff=False)
-		mainMenu.add_cascade(label="Edit", menu=editMenu)
-
-		for i in range(editMenuOptionsCount):
-			editMenu.add_command(label=editMenuOptions[i])
-
-	def _addHelpMenu(self, mainMenu):
-		helpMenu = tk.Menu(mainMenu, tearoff=False)
-		mainMenu.add_cascade(label="Help", menu=helpMenu)
-
-		helpMenu.add_command(label="About", command=self._showAboutWindow)
+		mainMenu = cw.MainMenu(self)
+		mainMenu.addFileMenu()
+		mainMenu.addEditMenu()
+		mainMenu.addHelpMenu()
 
 	def _createToolbar(self):
 		# toolbar class
@@ -134,9 +103,6 @@ class Application(tk.Frame):
 		settingsDropdownButton.pack(side=tk.LEFT, fill=tk.Y)
 
 		toolbar.pack(side=tk.TOP, fill=tk.X)
-
-	def _showAboutWindow(self):
-		tk.messagebox.showinfo("About", "Velichko Stoev made this using TkInter!")
 
 	def _photoCommentWindow(self):
 		tk.simpledialog.askstring("Comment the picture", "Your comment")
