@@ -51,57 +51,39 @@ class Application(tk.Frame):
 		else:
 			self._colorWindow.destroy()
 
-	def _addWhiteBalanceFrame(self):
-		frame = tk.LabelFrame(self._colorWindow, text="White Balance")
+	# def _addWhiteBalanceFrame(self):
+	# 	frame = tk.LabelFrame(self._colorWindow, text="White Balance")
 
-		methodLabel = tk.Label(frame, text="Method")
-		methodLabel.pack()
+	# 	methodLabel = tk.Label(frame, text="Method")
+	# 	methodLabel.pack()
 
-		methodDropdownOptions = [
-			"Camera","Auto","Daylight", "Cloudy",
-			"Shade", "Underwater", "Fluorescent",
-			"Lamp", "LED", "Flash", "Custom"
-		]
-		stringVar = tk.StringVar()
-		stringVar.set(methodDropdownOptions[0])
-		dropdownMenu = tk.OptionMenu(frame,stringVar,*methodDropdownOptions)
-		dropdownMenu.pack()
+	# 	methodDropdownOptions = [
+	# 		"Camera","Auto","Daylight", "Cloudy",
+	# 		"Shade", "Underwater", "Fluorescent",
+	# 		"Lamp", "LED", "Flash", "Custom"
+	# 	]
+	# 	stringVar = tk.StringVar()
+	# 	stringVar.set(methodDropdownOptions[0])
+	# 	dropdownMenu = tk.OptionMenu(frame,stringVar,*methodDropdownOptions)
+	# 	dropdownMenu.pack()
 
-		self._addSlider(frame, "Temperature", 60)
-		self._addSlider(frame, "Tint", 30)
-		self._addSlider(frame, "Blue/Red Equilizer", 40)
+	# 	self._addSlider(frame, "Temperature", 60)
+	# 	self._addSlider(frame, "Tint", 30)
+	# 	self._addSlider(frame, "Blue/Red Equilizer", 40)
 
-		frame.pack(padx=5)
+	# 	frame.pack(padx=5)
 
-	def _addBlackWhiteFrame(self):
-		self.blackWhiteFrame = tk.LabelFrame(self._colorWindow, text="Black and White")
+	# def _addGammaCorrection(self, blackWhiteFrame):
+	# 	frame = tk.Frame(blackWhiteFrame)
 
-		methodLabel = tk.Label(self.blackWhiteFrame, text="Method")
-		methodLabel.pack()
+	# 	blackWhiteLabel = tk.Label(frame, text="Gamma Correction")
+	# 	blackWhiteLabel.pack(side=tk.TOP)
 
-		methodDropdownOptions = [
-			"Desaturation","Luminance Equilizer", "Channel Mixer"
-		]
-		stringVar = tk.StringVar()
-		stringVar.set(methodDropdownOptions[0])
-		dropdownMenu = tk.OptionMenu(self.blackWhiteFrame,stringVar,*methodDropdownOptions)
-		dropdownMenu.pack()
+	# 	self._addSlider(frame, "Red")
+	# 	self._addSlider(frame, "Green")
+	# 	self._addSlider(frame, "Blue")
 
-		self._addGammaCorrection(self.blackWhiteFrame)
-
-		self.blackWhiteFrame.pack(padx=5)
-
-	def _addGammaCorrection(self, blackWhiteFrame):
-		frame = tk.Frame(blackWhiteFrame)
-
-		blackWhiteLabel = tk.Label(frame, text="Gamma Correction")
-		blackWhiteLabel.pack(side=tk.TOP)
-
-		self._addSlider(frame, "Red")
-		self._addSlider(frame, "Green")
-		self._addSlider(frame, "Blue")
-
-		frame.pack()
+	# 	frame.pack()
 
 root = tk.Tk()
 app = Application(master = root)

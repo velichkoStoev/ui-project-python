@@ -60,3 +60,62 @@ class ExposureWindow(tk.Toplevel):
 	def _setToneCurveDefaultValues(self):
 		self.stringVar1.set("Linear")
 		self.stringVar2.set("Standart")
+
+class ColorWindow(tk.Toplevel):
+	WHITE_BALANCE_OPTIONS = [
+		"Camera","Auto","Daylight", "Cloudy",
+		"Shade", "Underwater", "Fluorescent",
+		"Lamp", "LED", "Flash", "Custom"
+	]
+
+	BLACK_WHITE_OPTIONS = [
+		"Desaturation","Luminance Equilizer", "Channel Mixer"
+	]
+
+	def __init__(self, frame):
+		super().__init__(frame)
+		self.resizable(tk.FALSE, tk.FALSE)
+
+	def addWhiteBalanceFrame(self):
+		frame = tk.LabelFrame(self, text="White Balance")
+
+		methodLabel = tk.Label(frame, text="Method")
+		methodLabel.pack()
+
+		stringVar = tk.StringVar()
+		stringVar.set(self.WHITE_BALANCE_OPTIONS[0])
+		dropdownMenu = tk.OptionMenu(frame,stringVar,*self.WHITE_BALANCE_OPTIONS)
+		dropdownMenu.pack()
+
+		cw.Slider(frame, "Temperature", 30)
+		cw.Slider(frame, "Tint", 30)
+		cw.Slider(frame, "Blue/Red Equilizer", 40)
+
+		frame.pack(padx=5)
+
+	def addBlackWhiteFrame(self):
+		self.blackWhiteFrame = tk.LabelFrame(self, text="Black and White")
+
+		methodLabel = tk.Label(self.blackWhiteFrame, text="Method")
+		methodLabel.pack()
+
+		stringVar = tk.StringVar()
+		stringVar.set(self.BLACK_WHITE_OPTIONS[0])
+		dropdownMenu = tk.OptionMenu(self.blackWhiteFrame,stringVar,*self.BLACK_WHITE_OPTIONS)
+		dropdownMenu.pack()
+
+		self._addGammaCorrection()
+
+		self.blackWhiteFrame.pack(padx=5)
+
+	def _addGammaCorrection(self):
+		frame = tk.Frame(self.blackWhiteFrame)
+
+		blackWhiteLabel = tk.Label(frame, text="Gamma Correction")
+		blackWhiteLabel.pack(side=tk.TOP)
+
+		cw.Slider(frame, "Red")
+		cw.Slider(frame, "Green")
+		cw.Slider(frame, "Blue")
+
+		frame.pack()

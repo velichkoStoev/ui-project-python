@@ -73,7 +73,13 @@ class Toolbar(tk.Frame):
 		settingsDropdownButton.pack(side=tk.LEFT, fill=tk.Y)
 
 	def _showColorWindow(self):
-		print("Open colors")
+		if self._colorVar.get() == 1:
+			self._colorWindow = w.ColorWindow(self)
+
+			self._colorWindow.addWhiteBalanceFrame()
+			self._colorWindow.addBlackWhiteFrame()
+		else:
+			self._colorWindow.destroy()
 
 	def _showExposureWindow(self):
 		if self._exposureVar.get() == 1:
