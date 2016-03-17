@@ -14,8 +14,6 @@ class Application(tk.Frame):
 		self._createMainFrame()
 		self._createGalleryFrame()
 
-	# private methods
-
 	def _createGalleryFrame(self):
 		cw.GalleryFrame(self)
 
@@ -40,50 +38,6 @@ class Application(tk.Frame):
 		toolbar.addIconButtons()
 		toolbar.addButton("Comment")
 		toolbar.addSettingsMenubutton()
-
-	def _showColorWindow(self):
-		if self._colorVar.get() == 1:
-			self._colorWindow = tk.Toplevel(self)
-			self._colorWindow.resizable(tk.FALSE, tk.FALSE)
-
-			self._addWhiteBalanceFrame()
-			self._addBlackWhiteFrame()
-		else:
-			self._colorWindow.destroy()
-
-	# def _addWhiteBalanceFrame(self):
-	# 	frame = tk.LabelFrame(self._colorWindow, text="White Balance")
-
-	# 	methodLabel = tk.Label(frame, text="Method")
-	# 	methodLabel.pack()
-
-	# 	methodDropdownOptions = [
-	# 		"Camera","Auto","Daylight", "Cloudy",
-	# 		"Shade", "Underwater", "Fluorescent",
-	# 		"Lamp", "LED", "Flash", "Custom"
-	# 	]
-	# 	stringVar = tk.StringVar()
-	# 	stringVar.set(methodDropdownOptions[0])
-	# 	dropdownMenu = tk.OptionMenu(frame,stringVar,*methodDropdownOptions)
-	# 	dropdownMenu.pack()
-
-	# 	self._addSlider(frame, "Temperature", 60)
-	# 	self._addSlider(frame, "Tint", 30)
-	# 	self._addSlider(frame, "Blue/Red Equilizer", 40)
-
-	# 	frame.pack(padx=5)
-
-	# def _addGammaCorrection(self, blackWhiteFrame):
-	# 	frame = tk.Frame(blackWhiteFrame)
-
-	# 	blackWhiteLabel = tk.Label(frame, text="Gamma Correction")
-	# 	blackWhiteLabel.pack(side=tk.TOP)
-
-	# 	self._addSlider(frame, "Red")
-	# 	self._addSlider(frame, "Green")
-	# 	self._addSlider(frame, "Blue")
-
-	# 	frame.pack()
 
 root = tk.Tk()
 app = Application(master = root)
