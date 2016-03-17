@@ -142,12 +142,12 @@ class Slider(tk.Frame):
 
 		self.slider = tk.Scale(self, orient=tk.HORIZONTAL)
 		self.slider.set(value)
-		self.slider.pack(side=tk.LEFT)
+		self.slider.pack(side=tk.LEFT, padx=10)
 
 		undoButton = tk.Button(self, text="Undo", command=self._setSliderDefaultValue)
-		undoButton.pack(side=tk.RIGHT)
+		undoButton.pack(side=tk.RIGHT, padx=10)
 
-		self.pack(fill=tk.X, padx=5)
+		self.pack(fill=tk.X, padx=10, pady=10)
 
 	def _setSliderDefaultValue(self):
 		self.slider.set(0)

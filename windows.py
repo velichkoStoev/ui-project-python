@@ -17,16 +17,16 @@ class ExposureWindow(tk.Toplevel):
 		holderFrame = tk.Frame(self)		
 
 		autoButton = tk.Button(holderFrame, text="Auto")
-		autoButton.pack(side=tk.LEFT, padx=5)
+		autoButton.pack(side=tk.LEFT, padx=10, pady=5)
 
 		clipLabel = tk.Label(holderFrame, text="Clip %")
-		clipLabel.pack(side=tk.LEFT, padx=5)
+		clipLabel.pack(side=tk.LEFT, padx=10, pady=5)
 
 		clipSpinbox = tk.Spinbox(holderFrame, from_=0, to=100, width=3)
-		clipSpinbox.pack(side=tk.LEFT, padx=5)
+		clipSpinbox.pack(side=tk.LEFT, padx=10, pady=5)
 
 		neutralButton = tk.Button(holderFrame, text="Neutral")
-		neutralButton.pack(side=tk.RIGHT, padx=5)
+		neutralButton.pack(side=tk.RIGHT, padx=10, pady=5)
 
 		holderFrame.pack(fill=tk.X)
 
@@ -38,24 +38,24 @@ class ExposureWindow(tk.Toplevel):
 		frame = tk.Frame(self)
 
 		toneCurveLabel = tk.Label(frame, text="Text Curve")
-		toneCurveLabel.pack(side=tk.LEFT)
+		toneCurveLabel.pack(side=tk.LEFT, padx=10, pady=5)
 
 		dropdownOptions1 = ["Linear","Custom","Parametric", "Control Cage"]
 		self.stringVar1 = tk.StringVar()
 		self.stringVar1.set(dropdownOptions1[0])
 		dropdownMenu1 = tk.OptionMenu(frame,self.stringVar1,*dropdownOptions1)
-		dropdownMenu1.pack(side=tk.LEFT)
+		dropdownMenu1.pack(side=tk.LEFT, padx=10, pady=5)
 
 		dropdownOptions2 = ["Standart","Weighted Standart","Film-like", "Saturation and Value Blending"]
 		self.stringVar2 = tk.StringVar()
 		self.stringVar2.set(dropdownOptions2[0])
 		dropdownMenu2 = tk.OptionMenu(frame,self.stringVar2,*dropdownOptions2)
-		dropdownMenu2.pack(side=tk.LEFT)
+		dropdownMenu2.pack(side=tk.LEFT, padx=10, pady=5)
 
 		undoButton = tk.Button(frame, text="Undo", command=self._setToneCurveDefaultValues)
-		undoButton.pack(side=tk.RIGHT)
+		undoButton.pack(side=tk.RIGHT, padx=10, pady=5)
 
-		frame.pack()
+		frame.pack(pady=5)
 
 	def _setToneCurveDefaultValues(self):
 		self.stringVar1.set("Linear")
@@ -91,7 +91,7 @@ class ColorWindow(tk.Toplevel):
 		cw.Slider(frame, "Tint", 30)
 		cw.Slider(frame, "Blue/Red Equilizer", 40)
 
-		frame.pack(padx=5)
+		frame.pack(padx=5, pady=(0, 15))
 
 	def addBlackWhiteFrame(self):
 		self.blackWhiteFrame = tk.LabelFrame(self, text="Black and White")
