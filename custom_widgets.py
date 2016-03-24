@@ -78,6 +78,7 @@ class Toolbar(tk.Frame):
 
 			self._colorWindow.addWhiteBalanceFrame()
 			self._colorWindow.addBlackWhiteFrame()
+			self._colorWindow.addApplyButton()
 		else:
 			self._colorWindow.destroy()
 
@@ -88,6 +89,7 @@ class Toolbar(tk.Frame):
 			self._exposureWindow.addHolderFrame()
 			self._exposureWindow.addSliders()
 			self._exposureWindow.addToneCurveFrame()
+			self._exposureWindow.addApplyButton()
 		else:
 			self._exposureWindow.destroy()
 

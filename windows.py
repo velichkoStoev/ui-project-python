@@ -56,6 +56,10 @@ class ExposureWindow(tk.Toplevel):
 		undoButton.pack(side=tk.RIGHT, padx=10, pady=5)
 
 		frame.pack(pady=5)
+		
+	def addApplyButton(self):
+		applyButton = tk.Button(self, text="Apply")
+		applyButton.pack(padx=5, pady=5)
 
 	def _setToneCurveDefaultValues(self):
 		self.stringVar1.set("Linear")
@@ -107,6 +111,10 @@ class ColorWindow(tk.Toplevel):
 		self._addGammaCorrection()
 
 		self.blackWhiteFrame.pack(padx=5)
+
+	def addApplyButton(self):
+		applyButton = tk.Button(self, text="Apply")
+		applyButton.pack(padx=5, pady=5)
 
 	def _addGammaCorrection(self):
 		frame = tk.Frame(self.blackWhiteFrame)
