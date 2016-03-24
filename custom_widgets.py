@@ -100,8 +100,19 @@ class MainFrame(tk.Frame):
 		self.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 	def addImageHolderFrame(self):
-		imageHolderFrame = tk.Frame(self, bd=1, bg="white", width=500)
+		imageHolderFrame = tk.Frame(self, bd=1, width=500)
 		imageHolderFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+		canvas = tk.Canvas(imageHolderFrame, bg="white")
+		canvas.pack(fill=tk.BOTH, expand=True)
+
+		verticalScrollbar = tk.Scrollbar(self, orient='vertical')
+		verticalScrollbar.pack(side=tk.LEFT, fill=tk.Y)
+
+		horizontalScrollbar = tk.Scrollbar(imageHolderFrame, orient='horizontal')
+		horizontalScrollbar.pack(fill=tk.X, side=tk.BOTTOM)
+
+
 
 	def addOptionsFrame(self):
 		buttonIconNames = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
