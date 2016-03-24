@@ -112,7 +112,30 @@ class MainFrame(tk.Frame):
 		horizontalScrollbar = tk.Scrollbar(imageHolderFrame, orient='horizontal')
 		horizontalScrollbar.pack(fill=tk.X, side=tk.BOTTOM)
 
+		statusBar = tk.Frame(imageHolderFrame, relief='sunken', border=3)
+		statusBar.pack(side=tk.BOTTOM, fill=tk.X, padx=1, pady=1)
 
+		self._statusLabel = tk.Label(statusBar, text='Editing the image...')
+		self._statusLabel.pack()
+
+		canvas.bind("<Enter>", self._onEnter)
+		canvas.bind("<Leave>", self._onLeave)
+		canvas.bind("<B1-Motion>", self._onMotion)
+		canvas.bind("<ButtonRelease-1>", self._onRelease)
+
+	def _onRelease(self, event):
+		statusText = "Last working position: (" + str(event.x) + " : " + str(event.y) + ")"
+		self._statusLabel.config(text=statusText)	
+
+	def _onMotion(self, event):
+		statusText = "Current working position: (" + str(event.x) + " : " + str(event.y) + ")"
+		self._statusLabel.config(text=statusText)
+
+	def _onEnter(self, event):
+		self._statusLabel.config(text="Start editing the image")
+
+	def _onLeave(self, event):
+		self._statusLabel.config(text="Stopped!")
 
 	def addOptionsFrame(self):
 		buttonIconNames = ["save", "rotate_left", "rotate_right", "mirror", "flip", "resize", "crop", "info"]
